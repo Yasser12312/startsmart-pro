@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StartSmart Pro - Din digitala guide för företagsstarten</title>
+    <title>StartSmart Pro</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>StartSmart Pro</h1>
+            <h1>StartSmart Sverige</h1>
             <p>Din digitala guide för företagsstarten</p>
             <div class="header-controls">
                 <select class="language-selector">
                     <option value="sv">Svenska</option>
                 </select>
                 <div class="theme-toggle">
-                    <!-- Theme toggle button här -->
+                    <span class="theme-icon">🌙</span>
                 </div>
             </div>
         </header>
@@ -25,18 +25,18 @@
         <main>
             <div class="services-grid">
                 <div class="service-card">
-                    <i class="fas fa-file-signature service-icon"></i>
-                    <h2>Företagsregistrering</h2>
+                    <i class="fas fa-file-signature"></i>
+                    <h3>Företagsregistrering</h3>
                     <p>Guidning genom hela registreringsprocessen</p>
                 </div>
                 <div class="service-card">
-                    <i class="fas fa-calculator service-icon"></i>
-                    <h2>Bokföring & Redovisning</h2>
+                    <i class="fas fa-calculator"></i>
+                    <h3>Bokföring & Redovisning</h3>
                     <p>Hjälp med bokföring, moms och årsredovisning</p>
                 </div>
                 <div class="service-card">
-                    <i class="fas fa-lightbulb service-icon"></i>
-                    <h2>Rådgivning</h2>
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Rådgivning</h3>
                     <p>Expertråd för ditt företags specifika behov</p>
                 </div>
             </div>
@@ -44,10 +44,24 @@
             <div class="chat-section">
                 <h2>Chatta med din företagsassistent</h2>
                 <div class="chat-container">
-                    <!-- Chat interface här -->
+                    <div class="chat-messages">
+                        <p class="welcome-message">👋 Välkommen! Några exempel på vad du kan fråga:</p>
+                        <p class="example-question">"Hur registrerar jag ett aktiebolag?"</p>
+                        <p class="example-question">"Vad behöver jag tänka på vid första momsdeklarationen?"</p>
+                        <p class="example-question">"Vilka försäkringar behöver mitt företag?"</p>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Ställ din fråga om företagande här..." />
+                        <button class="send-button">Skicka</button>
+                    </div>
                 </div>
             </div>
         </main>
+
+        <footer>
+            <p>StartSmart Sverige - Din partner för en framgångsrik företagsstart</p>
+            <p class="footer-sub">Utvecklad för att stödja Sveriges nästa generation av företagare</p>
+        </footer>
     </div>
     <script src="script.js"></script>
 </body>
