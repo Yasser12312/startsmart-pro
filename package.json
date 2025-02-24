@@ -23,5 +23,18 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "@eslint/eslintrc": "^3"
-  }
+  },
+  "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).",
+  "main": "script.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yasser12312/startsmart-pro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yasser12312/startsmart-pro/issues"
+  },
+  "homepage": "https://github.com/Yasser12312/startsmart-pro#readme"
 }
