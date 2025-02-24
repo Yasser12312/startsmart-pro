@@ -20,17 +20,81 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') sendMessage();
     });
 
-    function sendMessage() {
+    // Förbättrad svarsdatabas
+    const chatResponses = {
+        aktiebolag: {
+            keywords: ['aktiebolag', 'ab', 'starta företag', 'registrera företag'],
+            response: `För att registrera ett aktiebolag behöver du:
+1. Aktiekapital (minst 25 000 kr)
+2. Bolagsordning
+3. Styrelse och revisor
+4. Registrera hos Bolagsverket
+5. Ansöka om F-skatt och moms hos Skatteverket
+
+Vill du veta mer om något specifikt steg?`
+        },
+        moms: {
+            keywords: ['moms', 'momsdeklaration', 'momsredovisning', 'skattedeklaration'],
+            response: `Vid momshantering är detta viktigt:
+1. Registrera dig för moms hos Skatteverket
+2. Spara alla kvitton och fakturor
+3. Bokför ingående och utgående moms korrekt
+4. Lämna momsdeklaration i tid
+5. Betala eller få återbetalning av moms
+
+Behöver du mer information om momssatser eller redovisningsperioder?`
+        },
+        försäkring: {
+            keywords: ['försäkring', 'försäkringar', 'försäkra'],
+            response: `Viktiga försäkringar för företag:
+1. Ansvarsförsäkring
+2. Egendomsförsäkring
+3. Avbrottsförsäkring
+4. Rättsskyddsförsäkring
+5. Sjukavbrottsförsäkring
+
+Vill du veta mer om någon specifik försäkring?`
+        },
+        bokföring: {
+            keywords: ['bokföring', 'bokföra', 'redovisning', 'räkenskaper'],
+            response: `Grundläggande om bokföring:
+1. Löpande bokföring är lagkrav
+2. Spara alla verifikationer i 7 år
+3. Upprätta årsbokslut/årsredovisning
+4. Använd bokföringsprogram eller anlita redovisningskonsult
+5. Följ god redovisningssed
+
+Behöver du tips på bokföringsprogram eller mer information?`
+        }
+    };
+
+    async function sendMessage() {
         const message = chatInput.value.trim();
         if (message) {
             addMessage(message, 'user-message');
             chatInput.value = '';
             
-            // Simulera bot-svar med en kort fördröjning
-            setTimeout(() => {
-                const botResponse = getBotResponse(message.toLowerCase());
-                addMessage(botResponse, 'bot-message');
-            }, 500);
+            // Visa laddningsindikator
+            const loadingMessage = addMessage('Tänker...', 'bot-message loading');
+            
+            try {
+                const response = await fetch('http://localhost:3000/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message })
+                });
+                
+                const data = await response.json();
+                
+                // Ta bort laddningsmeddelande och visa svaret
+                loadingMessage.remove();
+                addMessage(data.response, 'bot-message');
+            } catch (error) {
+                loadingMessage.remove();
+                addMessage('Tyvärr kunde jag inte behandla din fråga just nu. Försök igen senare.', 'bot-message error');
+            }
         }
     }
 
@@ -46,14 +110,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getBotResponse(message) {
-        if (message.includes('aktiebolag')) {
-            return 'För att registrera ett aktiebolag behöver du:\n1. Aktiekapital (minst 25 000 kr)\n2. Bolagsordning\n3. Registrera hos Bolagsverket';
-        } else if (message.includes('moms')) {
-            return 'Vid första momsdeklarationen är det viktigt att:\n1. Ha alla kvitton sparade\n2. Registrera ingående och utgående moms\n3. Skicka in i tid';
-        } else if (message.includes('försäkring')) {
-            return 'Grundläggande försäkringar för företag:\n1. Ansvarsförsäkring\n2. Egendomsförsäkring\n3. Avbrottsförsäkring';
+        const lowercaseMessage = message.toLowerCase();
+        
+        // Söker igenom alla kategorier efter matchande nyckelord
+        for (const category in chatResponses) {
+            if (chatResponses[category].keywords.some(keyword => 
+                lowercaseMessage.includes(keyword))) {
+                return chatResponses[category].response;
+            }
         }
-        return 'Jag kan hjälpa dig med frågor om företagsregistrering, moms och försäkringar. Vad vill du veta mer om?';
+
+        // Om inget specifikt nyckelord hittas
+        if (lowercaseMessage.includes('hej') || lowercaseMessage.includes('hallå')) {
+            return `Hej! Jag kan hjälpa dig med information om:
+- Företagsregistrering
+- Moms och bokföring
+- Försäkringar
+- Andra företagsfrågor
+
+Vad vill du veta mer om?`;
+        }
+
+        // Standardsvar om ingen matchning hittas
+        return `Jag förstår inte riktigt din fråga. Jag kan hjälpa dig med:
+1. Hur man startar aktiebolag
+2. Momshantering och bokföring
+3. Företagsförsäkringar
+
+Kan du omformulera din fråga eller välja ett av dessa ämnen?`;
     }
 
     // Theme toggle
