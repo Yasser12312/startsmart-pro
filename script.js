@@ -78,7 +78,7 @@ Behöver du tips på bokföringsprogram eller mer information?`
             const loadingMessage = addMessage('Tänker...', 'bot-message loading');
             
             try {
-                const response = await fetch('http://localhost:3000/chat', {
+                const response = await fetch('https://din-render-url.onrender.com/chat', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -194,4 +194,4 @@ Kan du omformulera din fråga eller välja ett av dessa ämnen?`;
         }
     `;
     document.head.appendChild(style);
-}); 
+});
